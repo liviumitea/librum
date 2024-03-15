@@ -27,6 +27,10 @@ spec:
           value: "librum"
         - name: MARIADB_ROOT_PASSWORD
           value: "mariadb"
+        - name: PUID
+          value: "65534"
+        - name: PGID
+          value: "65534"
         volumeMounts:
         - name: librum-db-storage
           mountPath: /var/lib/mysql
