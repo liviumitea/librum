@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: librum-db
+  namespace: librum
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: librum-db
+  template:
+    metadata:
+      labels:
+        app: librum-db
+    spec:
+      containers:
+      - name: librum-db
+        image: mariadb:latest
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MARIADB_USER
+          value: "librum"
+        - name: MARIADB_PASSWORD
+          value: "mariadb"
+        - name: MARIADB_DATABASE
+          value: "librum"
+        - name: MARIADB_ROOT_PASSWORD
+          value: "mariadb"
+        volumeMounts:
+        - name: librum-db-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: librum-db-storage
+        hostPath:
+          path: /data-nfs/librum/db
